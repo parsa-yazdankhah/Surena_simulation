@@ -123,8 +123,8 @@ PROTO Humanoid [
 
 
 PROTO VisionSensor [
-  exposedField SFVec3f    translation       0.1 0.1 0.1
-  exposedField SFRotation rotation          0.5770438 -0.5775035 -0.5775035 2.094755
+  exposedField SFVec3f    translation       0.1 0.1 0.7
+  exposedField SFRotation rotation          0.4472 -0.4472 -0.7746 1.8235
   exposedField MFNode     children          [ ]
   exposedField SFFloat    fieldOfView       0.785398
   exposedField SFString   name              ""

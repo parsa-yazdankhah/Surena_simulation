@@ -53,6 +53,7 @@ items:
               name: "GLVisionSimulator"
               plugin: Body
               class: GLVisionSimulatorItem
+              is_selected: true
               data: 
                 enabled: true
                 max_frame_rate: 1000
@@ -116,20 +117,20 @@ items:
               data: 
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: ""
+                controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/SurenaController"
                 base_directory: "None"
                 reloading: false
                 export_symbols: false
               children: 
                 - 
                   id: 6
-                  name: "CameraSampleController"
+                  name: "CameraController"
                   plugin: Body
                   class: SimpleControllerItem
                   data: 
                     isNoDelayMode: false
                     controllerOptions: "CameraSampleController"
-                    controller: ""
+                    controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/CameraController"
                     base_directory: "None"
                     reloading: false
                     export_symbols: false
@@ -241,13 +242,68 @@ views:
       yz_grid_color: [ 0.9, 0.9, 0.9 ]
   - 
     id: 5
+    name: "Scene 2"
+    plugin: Base
+    class: SceneView
+    state: 
+      editMode: true
+      viewpointOperationMode: thirdPerson
+      visible_polygon_elements: [ face ]
+      highlighting: false
+      collisionLines: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          isCurrent: true
+          eye: [ 3.07494, 1.42383, 1.09885 ]
+          direction: [ -0.897651, -0.415651, -0.146484 ]
+          up: [ -0.132925, -0.0615505, 0.989213 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+      lighting_mode: normal
+      culling_mode: enabled
+      shading_mode: smooth
+      world_light: true
+      world_light_intensity: 0.5
+      ambient_light: true
+      ambient_light_intensity: 0.25
+      head_light: true
+      head_light_intensity: 0.75
+      world_light_shadow: true
+      shadow_lights: 
+        - { index: 0, enabled: false }
+        - { index: 1, enabled: false }
+      background_color: [ 0.1, 0.1, 0.3 ]
+      line_width: 1
+      point_size: 1
+      field_of_view: 35
+      clip_distances: [ 0.04, 200 ]
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGrid: false
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      yzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      xy_grid_color: [ 0.9, 0.9, 0.9 ]
+      xz_grid_color: [ 0.9, 0.9, 0.9 ]
+      yz_grid_color: [ 0.9, 0.9, 0.9 ]
+  - 
+    id: 6
     plugin: Body
     class: BodyLinkView
     mounted: true
     state: 
       showRotationMatrix: false
   - 
-    id: 6
+    id: 7
+    plugin: Body
+    class: BodyStateView
+  - 
+    id: 8
     plugin: Body
     class: JointDisplacementView
     mounted: true
@@ -261,7 +317,7 @@ views:
       limit_ranges: false
       show_selected_joints: false
   - 
-    id: 7
+    id: 9
     plugin: Body
     class: LinkDeviceListView
     mounted: true
@@ -277,7 +333,7 @@ views:
           id: 4
           selected_links: [ 0 ]
   - 
-    id: 8
+    id: 10
     plugin: Body
     class: LinkPositionView
     mounted: true
@@ -290,7 +346,7 @@ views:
       show_rotation_matrix: false
       target_link_type: ik_link
   - 
-    id: 9
+    id: 11
     plugin: Body
     class: LinkPropertyView
     mounted: true
@@ -371,7 +427,7 @@ viewAreas:
                   views: [ 1 ]
                 - 
                   type: pane
-                  views: [ 0, 9 ]
+                  views: [ 0, 11 ]
                   current: 0
             - 
               type: splitter
@@ -380,7 +436,7 @@ viewAreas:
               children: 
                 - 
                   type: pane
-                  views: [ 4, 5 ]
+                  views: [ 4, 6 ]
                   current: 4
                 - 
                   type: pane
@@ -400,11 +456,11 @@ viewAreas:
               children: 
                 - 
                   type: pane
-                  views: [ 8 ]
+                  views: [ 10 ]
                 - 
                   type: pane
-                  views: [ 7, 6 ]
-                  current: 7
+                  views: [ 9, 8 ]
+                  current: 9
 layoutOfToolBars: 
   rows: 
     - 
