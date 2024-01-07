@@ -144,8 +144,8 @@ public:
         unsigned char* dst = (unsigned char*)&(range.data[0]);
         for (size_t j = 0; j < points.size(); ++j) {
             float x = points[j].x();
-            float y = - points[j].y();
-            float z = - points[j].z();
+            float y = points[j].y();
+            float z = points[j].z();
             std::memcpy(&dst[0], &x, 4);
             std::memcpy(&dst[4], &y, 4);
             std::memcpy(&dst[8], &z, 4);

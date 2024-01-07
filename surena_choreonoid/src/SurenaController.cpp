@@ -117,7 +117,6 @@ public:
             switch (command)
             {
             case 119: // w:move forward
-                is_config = false;
                 step_count = 2;
                 step_length = 0.15;
                 theta = 0.0;
@@ -125,7 +124,6 @@ public:
                 break;
 
             case 115: // s:move backward
-                is_config = false;
                 step_count = 2;
                 step_length = -0.15;
                 theta = 0.0;
@@ -133,7 +131,6 @@ public:
                 break;
 
             case 97: // a:turn left
-                is_config = false;
                 step_count = 2;
                 step_length = -0.15;
                 theta = 0.2;
@@ -141,7 +138,6 @@ public:
                 break;
 
             case 100: // d:turn right
-                is_config = false;
                 step_count = 2;
                 step_length = 0.15;
                 theta = 0.2;
@@ -151,6 +147,7 @@ public:
             case 99: // c:config file trajectory
                 is_config = true;
                 callTraj();
+                is_config = false;
                 break;
 
             default:

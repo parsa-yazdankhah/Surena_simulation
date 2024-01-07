@@ -69,32 +69,6 @@ items:
                 antialiasing: false
         - 
           id: 4
-          name: "Floor"
-          plugin: Body
-          class: BodyItem
-          is_checked: true
-          data: 
-            file: "../model/floor.body"
-            format: CHOREONOID-BODY
-            rootPosition: [ 0, 0, -0.1 ]
-            rootAttitude: [ 
-              1, 0, 0, 
-              0, 1, 0, 
-              0, 0, 1 ]
-            jointPositions: [  ]
-            initialRootPosition: [ 0, 0, -0.1 ]
-            initialRootAttitude: [ 
-              1, 0, 0, 
-              0, 1, 0, 
-              0, 0, 1 ]
-            fix_root: true
-            collisionDetection: true
-            selfCollisionDetection: false
-            lock_location: false
-            scene_sensitive: true
-            zmp: [ 0, 0, 0 ]
-        - 
-          id: 5
           name: "SURENA4"
           plugin: Body
           class: BodyItem
@@ -145,7 +119,7 @@ items:
             zmp: [ 0, 0, 0 ]
           children: 
             - 
-              id: 6
+              id: 5
               name: "SimpleController"
               plugin: Body
               class: SimpleControllerItem
@@ -158,7 +132,7 @@ items:
                 reloading: false
                 export_symbols: false
             - 
-              id: 7
+              id: 6
               name: "CameraController"
               plugin: Body
               class: SimpleControllerItem
@@ -171,7 +145,7 @@ items:
                 reloading: false
                 export_symbols: false
             - 
-              id: 8
+              id: 7
               name: "SensorVisualizer"
               plugin: Body
               class: SensorVisualizerItem
@@ -208,84 +182,110 @@ items:
                     point_size: 0
                     voxel_size: 0.01
                     is_editable: false
-    - 
-      id: 9
-      name: "box3"
-      plugin: Body
-      class: BodyItem
-      is_checked: true
-      data: 
-        file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 1.82265167, 0.0819808882, 0.104850319 ]
-        rootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        jointPositions: [  ]
-        initialRootPosition: [ 1.82265167, 0.0819808882, 0.104850319 ]
-        initialRootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        fix_root: false
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
-        zmp: [ 0, 0, 0 ]
-    - 
-      id: 10
-      name: "box2"
-      plugin: Body
-      class: BodyItem
-      is_checked: true
-      data: 
-        file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 1.31666594, 0.0819808882, 0.104850319 ]
-        rootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        jointPositions: [  ]
-        initialRootPosition: [ 1.31666594, 0.0819808882, 0.104850319 ]
-        initialRootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        fix_root: false
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
-        zmp: [ 0, 0, 0 ]
-    - 
-      id: 11
-      name: "box1"
-      plugin: Body
-      class: BodyItem
-      is_checked: true
-      data: 
-        file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 0.802856668, 0.0819808882, 0.104850319 ]
-        rootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        jointPositions: [  ]
-        initialRootPosition: [ 0.802856668, 0.0819808882, 0.104850319 ]
-        initialRootAttitude: [ 
-          1, 0, 0, 
-          0, 1, 0, 
-          0, 0, 1 ]
-        fix_root: false
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
-        zmp: [ 0, 0, 0 ]
+        - 
+          id: 8
+          name: "Floor"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "../model/floor.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            zmp: [ 0, 0, 0 ]
+        - 
+          id: 9
+          name: "box3"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 1.82265167, 0.0819808882, 0.104850319 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 1.82265167, 0.0819808882, 0.104850319 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            fix_root: false
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            zmp: [ 0, 0, 0 ]
+        - 
+          id: 10
+          name: "box2"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 1.31666594, 0.0819808882, 0.104850319 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 1.31666594, 0.0819808882, 0.104850319 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            fix_root: false
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            zmp: [ 0, 0, 0 ]
+        - 
+          id: 11
+          name: "box1"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "${HOME}/surena_ws/src/choreonoid/share/model/misc/box1.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0.802856668, 0.0819808882, 0.104850319 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 0.802856668, 0.0819808882, 0.104850319 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            fix_root: false
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            zmp: [ 0, 0, 0 ]
 views: 
   - 
     id: 0
@@ -462,10 +462,10 @@ views:
           id: 11
           selected_links: [ 0 ]
         - 
-          id: 5
+          id: 4
           selected_links: [ 0 ]
         - 
-          id: 4
+          id: 8
           selected_links: [ 0 ]
   - 
     id: 10
@@ -529,7 +529,7 @@ Body:
         show_cm_projection: false
         show_zmp: false
       - 
-        body_item: 5
+        body_item: 8
         show_cm: false
         show_cm_projection: false
         show_zmp: false

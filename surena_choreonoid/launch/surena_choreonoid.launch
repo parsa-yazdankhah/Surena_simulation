@@ -2,14 +2,14 @@
 
 <launch>
   
-  <!-- transformations -->
+  <!-- tf -->
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf" args="0 0 0 0 0 0 map odom 100" />
   <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link_tf" args="0 0 0.9 0 0 0 odom base_link 100" />
   <!-- camera orientation mode (quaternion) options: -->
   <!--   0 deg (horizontal) : 0.4998274 -0.5001739 -0.5001739 0.4998247 -->
   <!-- -30 deg              : 0.3535492 -0.3535492 -0.6123865 0.6123632 -->
   <!-- -45 deg              : 0.2705873 -0.2705873 -0.6533011 0.6532707 -->
-  <arg name="camera_orientation" default="0.2705873 -0.2705873 -0.6533011 0.6532707"/>
+  <arg name="camera_orientation" default="0.3535492 -0.3535492 -0.6123865 0.6123632"/>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_tf" args="0 0 0.7 $(arg camera_orientation) base_link camera_link 100"/>
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_tf" args="0 0 0 0 0 0 camera_link camera 100" />
 
@@ -25,10 +25,8 @@
   <node pkg="keyboard_teleop" name="keyboard_teleop_node" type="keyboard_teleop_node"/>
 
 
-  <!-- Rviz -->
-  <node pkg="rviz" type="rviz" name="rviz_launcher"/>
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find surena_choreonoid)/launch/surena_rviz.rviz"/>
 
-
-  
 
 </launch>
