@@ -49,7 +49,7 @@
   <arg name="database_path"           default="~/.ros/rtabmap.db"/>
   <arg name="queue_size"              default="10"/>
   <arg name="wait_for_transform"      default="0.2"/>
-  <arg name="args"                    default="delete_db_on_start"/>              <!-- delete_db_on_start, udebug -->
+  <arg name="args"                    default="--delete_db_on_start"/>              <!-- delete_db_on_start, udebug -->
   <arg name="rtabmap_args"            default="$(arg args)"/>   <!-- deprecated, use "args" argument -->
   <arg name="gdb"                     default="false"/>         <!-- Launch nodes in gdb for debugging (apt install xterm gdb) -->
   <arg     if="$(arg gdb)" name="launch_prefix" default="xterm -e gdb -q -ex run --args"/>
@@ -78,7 +78,7 @@
 
   <!-- Already synchronized RGB-D related topic, with rtabmap_sync/rgbd_sync nodelet -->
   <arg name="rgbd_sync"               default="false"/>         <!-- pre-sync rgb_topic, depth_topic, camera_info_topic -->
-  <arg name="approx_rgbd_sync"        default="true"/>          <!-- false=exact synchronization -->
+  <arg name="approx_rgbd_sync"        default="false"/>          <!-- false=exact synchronization -->
   <arg name="subscribe_rgbd"          default="$(arg rgbd_sync)"/>
   <arg name="rgbd_topic"              default="rgbd_image" />
   <arg name="depth_scale"             default="1.0" />         <!-- Deprecated, use rgbd_depth_scale instead -->
@@ -96,7 +96,7 @@
   <arg name="subscribe_scan"          default="false"/>
   <arg name="scan_topic"              default="/scan"/>
   <arg name="subscribe_scan_cloud"    default="$(arg gen_cloud)"/>
-  <arg name="scan_cloud_topic"        default="/scan_cloud"/>
+  <arg name="scan_cloud_topic"        default="/point_cloud"/>
   <arg name="subscribe_scan_descriptor" default="false"/>
   <arg name="scan_descriptor_topic"   default="/scan_descriptor"/>
   <arg name="scan_deskewing"          default="false"/>
