@@ -3,20 +3,19 @@
 <launch>
   
   <!-- tf -->
-  <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf" args="0 0 0 0 0 0 map odom 100" />
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link_tf" args="0 0 0.9 0 0 0 odom base_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf" args="0 0 0 0 0 0 map odom 5"/>
+  <node pkg="surena_choreonoid" type="odom_to_base_link_publisher" name="odom_to_base_link_tf"/>
   <!-- camera orientation mode (quaternion) options: -->
-  <!--   0 deg (horizontal) : 0.4998274 -0.5001739 -0.5001739 0.4998247 -->
-  <!-- -30 deg              : 0.3535492 -0.3535492 -0.6123865 0.6123632 -->
-  <!-- -45 deg              : 0.2705873 -0.2705873 -0.6533011 0.6532707 -->
-  <arg name="camera_orientation" default="0.3535492 -0.3535492 -0.6123865 0.6123632"/>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_tf" args="0 0 0.7 $(arg camera_orientation) base_link camera_link 100"/>
-  <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_tf" args="0 0 0 0 0 0 camera_link camera 100" />
+  <arg name="0_deg_cam_orientation" default="0.4998274 -0.5001739 -0.5001739 0.4998247"/>
+  <arg name="30_deg_cam_orientation" default="0.3535492 -0.3535492 -0.6123865 0.6123632"/>
+  <arg name="45_deg_cam_orientation" default="0.2705873 -0.2705873 -0.6533011 0.6532707"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link_tf" args="0 0 0.7 $(arg 30_deg_cam_orientation) base_link camera_link 5"/>
+  <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_tf" args="0 0 0 0 0 0 camera_link camera 5" />
 
 
   <!-- choreonoid -->
-  <!-- Project options: Surena-IV , Surena-V , Surena-V-house -->
-  <arg name="project" default="Surena-IV"/> 
+  <!-- Project options: Surena-IV-room , Surena-V-room -->
+  <arg name="project" default="Surena-IV-room"/> 
   <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid"
         args="$(find surena_choreonoid)/project/$(arg project).cnoid --start-simulation"/>
 

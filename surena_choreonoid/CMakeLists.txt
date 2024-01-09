@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   message_generation
   actionlib_msgs
+  tf
   )
 
 add_service_files(
@@ -33,6 +34,9 @@ file(GLOB SOURCES "src/BumpSensor.cpp" "src/Obstacle.cpp")
 add_executable(bump_sensor ${SOURCES})
 target_link_libraries(bump_sensor ${catkin_LIBRARIES})
 add_dependencies(bump_sensor ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(odom_to_base_link_publisher src/robotBase_tf_publisher.cpp)
+target_link_libraries(odom_to_base_link_publisher ${catkin_LIBRARIES})
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING

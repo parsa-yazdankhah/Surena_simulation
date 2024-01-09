@@ -53,7 +53,8 @@ class SurenaController : public SimpleController
 
     ros::NodeHandle nh;
     ros::Subscriber keyboardCommandSub_ = nh.subscribe("/keyboard_command", 1, &SurenaController::commandHandler, this);
-
+    ros::Publisher comDataPub = nh.advertise<geometry_msgs::Pose>("surena/robot_pose", 100);
+  
     int idx = 0;
     double dt;
     double qref[29];
@@ -174,8 +175,7 @@ public:
         io->enableInput(rightForceSensor);
         accelSensor = ioBody->findDevice<AccelerationSensor>("WaistAccelSensor");
         io->enableInput(accelSensor);
-        gyro = ioBody->findDevice<RateGyroSensor>("WaistGyro"); //SurenaV
-        // gyro = ioBody->findDevice<RateGyroSensor>("gyrometer"); //SurenaIV
+        gyro = ioBody->findDevice<RateGyroSensor>("WaistGyro");
         io->enableInput(gyro);
         io->enableInput(ioBody->link(0), LINK_POSITION);
 
@@ -232,6 +232,17 @@ public:
 
             // rotation to quaternion
             Quaterniond base_quat(base_rot);
+
+            // publish robot pose and orientation
+            geometry_msgs::Pose com_pose;
+            com_pose.position.x = base_pos(0);
+            com_pose.position.y = base_pos(1);
+            com_pose.position.z = base_pos(2);
+            com_pose.orientation.x = base_quat.x();
+            com_pose.orientation.y = base_quat.y();
+            com_pose.orientation.z = base_quat.z();
+            com_pose.orientation.w = base_quat.w();
+            comDataPub.publish(com_pose);
 
             Vector3d left_ankle_pos = l_ankle.block<3, 1>(0, 3);
             Vector3d right_ankle_pos = r_ankle.block<3, 1>(0, 3);
