@@ -1,0 +1,974 @@
+items: 
+  id: 0
+  name: "RootItem"
+  plugin: Base
+  class: RootItem
+  is_builtin_item: true
+  children: 
+    - 
+      id: 1
+      name: "World"
+      plugin: Body
+      class: WorldItem
+      data: 
+        collision_detection: false
+        collision_detector: AISTCollisionDetector
+        default_material_table_file: "${SHARE}/default/materials.yaml"
+      children: 
+        - 
+          id: 2
+          name: "AISTSimulator"
+          plugin: Body
+          class: AISTSimulatorItem
+          is_checked: true
+          data: 
+            time_step: 0.001
+            realtime_sync_mode: compensatory
+            recording: full
+            time_range_mode: unlimited
+            time_length: 180
+            is_active_control_time_range_mode: false
+            output_all_link_positions: false
+            output_device_states: true
+            use_controller_threads: true
+            record_collision_data: false
+            controller_options: ""
+            block_scene_view_edit_mode: false
+            dynamicsMode: "Forward dynamics"
+            integrationMode: runge-kutta
+            gravity: [ 0, 0, -9.80665 ]
+            min_friction_coefficient: 0
+            max_friction_coefficient: 100
+            cullingThresh: 0.005
+            contactCullingDepth: 0.05
+            errorCriterion: 0.001
+            maxNumIterations: 25
+            contactCorrectionDepth: 0.00025
+            contactCorrectionVelocityRatio: 5
+            kinematicWalking: false
+            2Dmode: false
+            oldAccelSensorMode: false
+          children: 
+            - 
+              id: 3
+              name: "GLVisionSimulator"
+              plugin: Body
+              class: GLVisionSimulatorItem
+              data: 
+                enabled: true
+                max_frame_rate: 1000
+                max_latency: 1
+                record_vision_data: false
+                thread_mode: Sensor
+                best_effort: false
+                all_scene_objects: false
+                range_sensor_precision_ratio: 2
+                depth_error: 0
+                enable_head_light: true
+                enable_additional_lights: true
+                antialiasing: false
+        - 
+          id: 4
+          name: "SURENA5"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "../model/SurenaV/surena5.wrl"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, 0.905 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointDisplacements: [ 
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+              0, 0 ]
+            jointPositions: [ 
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+              0, 0 ]
+            initialRootPosition: [ 0, 0, 0.905 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            initialJointPositions: [ 
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+              0, 0 ]
+            fix_root: false
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            link_kinematics: 
+              "RLeg_AnkleR_J6": 
+                base_frame: 0
+                offset_frame: 0
+            zmp: [ 0, 0, 0 ]
+          children: 
+            - 
+              id: 5
+              name: "SimpleController"
+              plugin: Body
+              class: SimpleControllerItem
+              data: 
+                isNoDelayMode: false
+                controllerOptions: ""
+                controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/SurenaController"
+                base_directory: "None"
+                reloading: false
+                export_symbols: false
+            - 
+              id: 6
+              name: "CameraController"
+              plugin: Body
+              class: SimpleControllerItem
+              data: 
+                isNoDelayMode: false
+                controllerOptions: ""
+                controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/CameraController"
+                base_directory: "None"
+                reloading: false
+                export_symbols: false
+            - 
+              id: 7
+              name: "SensorVisualizer"
+              plugin: Body
+              class: SensorVisualizerItem
+              data: 
+                sub_items: 
+                  - 
+                    class: ForceSensorVisualizerItem
+                    name: ForceSensor
+                    ratio: 0.002
+                    threshold: 0.1
+                    offset: [ 0, 0, 0 ]
+                  - 
+                    class: AccelerationSensorVisualizerItem
+                    name: AccelerationSensor
+                    ratio: 0.1
+                    threshold: 0.05
+                    offset: [ 0, 0, -9.8 ]
+                  - 
+                    class: RateGyroSensorVisualizerItem
+                    name: RateGyro
+                    ratio: 0.4
+                    threshold: 0.01
+                    offset: [ 0, 0, 0 ]
+                  - 
+                    class: CameraImageVisualizerItem
+                    name: camera-Image
+                  - 
+                    class: PointCloudVisualizerItem
+                    name: camera
+                    translation: [ 0, 0, 0 ]
+                    rotation: [ 1, 0, 0, 0 ]
+                    angle_unit: degree
+                    rendering_mode: Point
+                    point_size: 0
+                    voxel_size: 0.01
+                    is_editable: false
+                  - 
+                    class: ForceSensorVisualizerItem
+                    name: ForceSensor
+                    ratio: 0.002
+                    threshold: 0.1
+                    offset: [ 0, 0, 0 ]
+                  - 
+                    class: AccelerationSensorVisualizerItem
+                    name: AccelerationSensor
+                    ratio: 0.1
+                    threshold: 0.05
+                    offset: [ 0, 0, -9.8 ]
+                  - 
+                    class: RateGyroSensorVisualizerItem
+                    name: RateGyro
+                    ratio: 0.4
+                    threshold: 0.01
+                    offset: [ 0, 0, 0 ]
+                  - 
+                    class: CameraImageVisualizerItem
+                    name: camera-Image
+                  - 
+                    class: PointCloudVisualizerItem
+                    name: camera
+                    translation: [ 0, 0, 0 ]
+                    rotation: [ 1, 0, 0, 0 ]
+                    angle_unit: degree
+                    rendering_mode: Point
+                    point_size: 0
+                    voxel_size: 0.01
+                    is_editable: false
+              children: 
+                - 
+                  id: 8
+                  name: "ForceSensor"
+                  plugin: Body
+                  class: ForceSensorVisualizerItem
+                  data: 
+                    ratio: 0.002
+                    threshold: 0.1
+                    offset: [ 0, 0, 0 ]
+                - 
+                  id: 9
+                  name: "AccelerationSensor"
+                  plugin: Body
+                  class: AccelerationSensorVisualizerItem
+                  data: 
+                    ratio: 0.1
+                    threshold: 0.05
+                    offset: [ 0, 0, -9.8 ]
+                - 
+                  id: 10
+                  name: "RateGyro"
+                  plugin: Body
+                  class: RateGyroSensorVisualizerItem
+                  data: 
+                    ratio: 0.4
+                    threshold: 0.01
+                    offset: [ 0, 0, 0 ]
+                - 
+                  id: 11
+                  name: "camera-Image"
+                  plugin: Body
+                  class: CameraImageVisualizerItem
+                - 
+                  id: 12
+                  name: "camera"
+                  plugin: Body
+                  class: PointCloudVisualizerItem
+                  data: 
+                    translation: [ 0, 0, 0 ]
+                    rotation: [ 1, 0, 0, 0 ]
+                    angle_unit: degree
+                    rendering_mode: Point
+                    point_size: 0
+                    voxel_size: 0.01
+                    is_editable: false
+        - 
+          id: 13
+          name: "Room"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data: 
+            file: "../model/misc/room.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, 0 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 0, 0, 0 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+            zmp: [ 0, 0, 0 ]
+        - 
+          id: 14
+          name: "Obstacles"
+          plugin: Base
+          class: FolderItem
+          is_checked: true
+          children: 
+            - 
+              id: 15
+              name: "Debris"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/debris.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 2.25, 2.75, 0.25 ]
+                rootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ 2.25, 2.75, 0.25 ]
+                initialRootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 16
+              name: "Debris2"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/debris.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -3, 1.75, 0.25 ]
+                rootAttitude: [ 
+                  -1, -1.2246468e-16, 0, 
+                  1.2246468e-16, -1, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -3, 1.75, 0.25 ]
+                initialRootAttitude: [ 
+                  -1, -1.2246468e-16, 0, 
+                  1.2246468e-16, -1, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 17
+              name: "Debris3"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/debris.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 1, -3.25, 0.25 ]
+                rootAttitude: [ 
+                  6.123234e-17, -1, 0, 
+                  1, 6.123234e-17, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ 1, -3.25, 0.25 ]
+                initialRootAttitude: [ 
+                  2.22044605e-16, -1, 0, 
+                  1, 2.22044605e-16, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 18
+              name: "Pyramid"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/pyramid.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 3, -1.5, 0.25 ]
+                rootAttitude: [ 
+                  6.123234e-17, -1, 0, 
+                  1, 6.123234e-17, -0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ 3, -1.5, 0.25 ]
+                initialRootAttitude: [ 
+                  2.22044605e-16, -1, 0, 
+                  1, 2.22044605e-16, 0, 
+                  0, 0, 1 ]
+                fix_root: false
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 19
+              name: "Pyramid2"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/pyramid.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -0.5, 2.25, 0.25 ]
+                rootAttitude: [ 
+                  0.866025404, 0.5, -0, 
+                  -0.5, 0.866025404, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -0.5, 2.25, 0.25 ]
+                initialRootAttitude: [ 
+                  0.866025404, 0.5, -0, 
+                  -0.5, 0.866025404, 0, 
+                  0, 0, 1 ]
+                fix_root: false
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 20
+              name: "Pyramid3"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/pyramid.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -1.75, -1.75, 0.25 ]
+                rootAttitude: [ 
+                  0.342020143, -0.939692621, 0, 
+                  0.939692621, 0.342020143, -0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -1.75, -1.75, 0.25 ]
+                initialRootAttitude: [ 
+                  0.342020143, -0.939692621, 0, 
+                  0.939692621, 0.342020143, 0, 
+                  0, 0, 1 ]
+                fix_root: false
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 21
+              name: "BaseB"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseB.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -4, -4, 1 ]
+                rootAttitude: [ 
+                  6.123234e-17, -1, 0, 
+                  1, 6.123234e-17, -0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -4, -4, 1 ]
+                initialRootAttitude: [ 
+                  2.22044605e-16, -1, 0, 
+                  1, 2.22044605e-16, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 22
+              name: "BaseB2"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseB.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -2.75, -4, 1 ]
+                rootAttitude: [ 
+                  6.123234e-17, -1, 0, 
+                  1, 6.123234e-17, -0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -2.75, -4, 1 ]
+                initialRootAttitude: [ 
+                  2.22044605e-16, -1, 0, 
+                  1, 2.22044605e-16, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 23
+              name: "BaseA"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseA.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 3.75, -3.75, 1 ]
+                rootAttitude: [ 
+                  0.707106781, -0.707106781, 0, 
+                  0.707106781, 0.707106781, -0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ 3.75, -3.75, 1 ]
+                initialRootAttitude: [ 
+                  0.707106781, -0.707106781, 0, 
+                  0.707106781, 0.707106781, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 24
+              name: "BaseA2"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseA.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -4, -1.25, 1 ]
+                rootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -4, -1.25, 1 ]
+                initialRootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 25
+              name: "BaseA3"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseA.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ -2, 4.65, 1 ]
+                rootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ -2, 4.65, 1 ]
+                initialRootAttitude: [ 
+                  1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+            - 
+              id: 26
+              name: "BaseA4"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data: 
+                file: "../model/misc/baseA.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 4.65, 1.5, 1 ]
+                rootAttitude: [ 
+                  6.123234e-17, 1, -0, 
+                  -1, 6.123234e-17, 0, 
+                  0, 0, 1 ]
+                jointPositions: [  ]
+                initialRootPosition: [ 4.65, 1.5, 1 ]
+                initialRootAttitude: [ 
+                  2.22044605e-16, 1, -0, 
+                  -1, 2.22044605e-16, 0, 
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: true
+                scene_sensitive: true
+                zmp: [ 0, 0, 0 ]
+views: 
+  - 
+    id: 0
+    plugin: Base
+    class: ItemPropertyView
+    mounted: true
+  - 
+    id: 1
+    plugin: Base
+    class: ItemTreeView
+    mounted: true
+    state: 
+      expanded: [ 1 ]
+  - 
+    id: 2
+    plugin: Base
+    class: LocationView
+    mounted: true
+    state: 
+      show_rpy: true
+      unique_rpy: false
+      show_quaternion: false
+      show_rotation_matrix: false
+      coordinate: world
+  - 
+    id: 3
+    plugin: Base
+    class: MessageView
+    mounted: true
+  - 
+    id: 4
+    plugin: Base
+    class: SceneView
+    mounted: true
+    state: 
+      editMode: false
+      viewpointOperationMode: thirdPerson
+      visible_polygon_elements: [ face ]
+      highlighting: false
+      collisionLines: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          isCurrent: true
+          eye: [ 2.97639, 2.80425, 2.54392 ]
+          direction: [ -0.66206, -0.642002, -0.386665 ]
+          up: [ -0.277586, -0.269177, 0.92222 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+      lighting_mode: normal
+      culling_mode: enabled
+      shading_mode: smooth
+      world_light: true
+      world_light_intensity: 0.5
+      ambient_light: true
+      ambient_light_intensity: 0.25
+      head_light: true
+      head_light_intensity: 0.75
+      world_light_shadow: true
+      shadow_lights: 
+        - { index: 0, enabled: false }
+        - { index: 1, enabled: false }
+      background_color: [ 0.1, 0.1, 0.3 ]
+      line_width: 1
+      point_size: 1
+      field_of_view: 35
+      clip_distances: [ 0.04, 200 ]
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGrid: false
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      yzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      xy_grid_color: [ 0.9, 0.9, 0.9 ]
+      xz_grid_color: [ 0.9, 0.9, 0.9 ]
+      yz_grid_color: [ 0.9, 0.9, 0.9 ]
+  - 
+    id: 5
+    name: "Scene 2"
+    plugin: Base
+    class: SceneView
+    mounted: true
+    state: 
+      editMode: false
+      viewpointOperationMode: thirdPerson
+      visible_polygon_elements: [ face ]
+      highlighting: false
+      collisionLines: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          eye: [ 3.07494, 1.42383, 1.09885 ]
+          direction: [ -0.897651, -0.415651, -0.146484 ]
+          up: [ -0.132925, -0.0615505, 0.989213 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+        - 
+          camera: [ SURENA5, camera ]
+          isCurrent: true
+      lighting_mode: normal
+      culling_mode: enabled
+      shading_mode: smooth
+      world_light: true
+      world_light_intensity: 0.5
+      ambient_light: true
+      ambient_light_intensity: 0.25
+      head_light: true
+      head_light_intensity: 0.75
+      world_light_shadow: true
+      shadow_lights: 
+        - { index: 0, enabled: false }
+        - { index: 1, enabled: false }
+      background_color: [ 0.1, 0.1, 0.3 ]
+      line_width: 1
+      point_size: 1
+      field_of_view: 35
+      clip_distances: [ 0.04, 200 ]
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGrid: false
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      yzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      xy_grid_color: [ 0.9, 0.9, 0.9 ]
+      xz_grid_color: [ 0.9, 0.9, 0.9 ]
+      yz_grid_color: [ 0.9, 0.9, 0.9 ]
+  - 
+    id: 6
+    plugin: Body
+    class: BodyLinkView
+    state: 
+      showRotationMatrix: false
+  - 
+    id: 7
+    plugin: Body
+    class: BodyStateView
+    mounted: true
+  - 
+    id: 8
+    plugin: Body
+    class: JointDisplacementView
+    mounted: true
+    state: 
+      show_joint_ids: true
+      show_joint_names: false
+      overlap_joint_names: false
+      show_sliders: true
+      show_dials: false
+      show_phases: true
+      limit_ranges: false
+      show_selected_joints: false
+  - 
+    id: 9
+    plugin: Body
+    class: LinkDeviceListView
+    mounted: true
+    state: 
+      element_type: all
+      listing_mode: list
+      current_body_item: 4
+      body_items: 
+        - 
+          id: 4
+          selected_links: [ 0 ]
+  - 
+    id: 10
+    plugin: Body
+    class: LinkPositionView
+    mounted: true
+    state: 
+      coordinate_mode: base
+      preferred_coordinate_mode: base
+      show_rpy: true
+      unique_rpy: false
+      show_quaternion: false
+      show_rotation_matrix: false
+      target_link_type: ik_link
+  - 
+    id: 11
+    plugin: Body
+    class: LinkPropertyView
+    mounted: true
+toolbars: 
+  "TimeBar": 
+    current_time: 0
+    min_time: 0
+    max_time: 39.918
+    frame_rate: 1000
+    playback_frame_rate: 60
+    idle_loop_driven_mode: false
+    playback_speed_ratio: 1
+    sync_to_ongoing_updates: true
+    auto_expansion: true
+  "LeggedBodyBar": 
+    stanceWidth: 0.15
+  "KinematicsBar": 
+    forward_kinematics: true
+    inverse_kinematics: true
+    preset_kinematics: true
+    enablePositionDragger: true
+    penetrationBlock: false
+    collisionLinkHighlight: false
+    snapDistance: 0.025
+    penetrationBlockDepth: 0.0005
+    lazyCollisionDetectionMode: true
+Body: 
+  "BodySelectionManager": 
+    current_body_item: 4
+    current_link: "Pelvis"
+  "KinematicFaultChecker": 
+    checkJointPositions: true
+    angleMargin: 0
+    translationMargin: 0
+    checkJointVelocities: true
+    velocityLimitRatio: 100
+    targetJoints: all
+    checkSelfCollisions: true
+    onlyTimeBarRange: false
+  "OperableSceneBody": 
+    scene_bodies: 
+      - 
+        body_item: 4
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 13
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 15
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 16
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 17
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 18
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 19
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 20
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 21
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 22
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 23
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 24
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 25
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      - 
+        body_item: 26
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+  "SplineFilterDialog": 
+    isInputFrameRateSpecified: false
+    inputFrameRate: 200
+    isOutputFrameRateSpecified: false
+    outputFrameRate: 200
+viewAreas: 
+  - 
+    type: embedded
+    tabs: true
+    contents: 
+      type: splitter
+      orientation: horizontal
+      sizes: [ 1492, 352 ]
+      children: 
+        - 
+          type: splitter
+          orientation: horizontal
+          sizes: [ 244, 1244 ]
+          children: 
+            - 
+              type: splitter
+              orientation: vertical
+              sizes: [ 449, 449 ]
+              children: 
+                - 
+                  type: pane
+                  views: [ 1 ]
+                - 
+                  type: pane
+                  views: [ 0, 11 ]
+                  current: 0
+            - 
+              type: splitter
+              orientation: vertical
+              sizes: [ 673, 225 ]
+              children: 
+                - 
+                  type: splitter
+                  orientation: horizontal
+                  sizes: [ 614, 626 ]
+                  children: 
+                    - 
+                      type: pane
+                      views: [ 4 ]
+                    - 
+                      type: pane
+                      views: [ 5 ]
+                - 
+                  type: pane
+                  views: [ 3, 7 ]
+                  current: 3
+        - 
+          type: splitter
+          orientation: vertical
+          sizes: [ 274, 624 ]
+          children: 
+            - 
+              type: pane
+              views: [ 2 ]
+            - 
+              type: splitter
+              orientation: vertical
+              sizes: [ 393, 227 ]
+              children: 
+                - 
+                  type: pane
+                  views: [ 10 ]
+                - 
+                  type: pane
+                  views: [ 9, 8 ]
+                  current: 9
+layoutOfToolBars: 
+  rows: 
+    - 
+      - { name: "FileBar", x: 0, priority: 0 }
+      - { name: "ScriptBar", x: 0, priority: 1 }
+      - { name: "SimulationBar", x: 0, priority: 2 }
+      - { name: "TimeBar", x: 0, priority: 0 }
+    - 
+      - { name: "BodyBar", x: 0, priority: 0 }
+      - { name: "KinematicsBar", x: 0, priority: 1 }
+      - { name: "SceneBar", x: 0, priority: 2 }
+      - { name: "GraphBar", x: 0, priority: 3 }
+      - { name: "CaptureBar", x: 0, priority: 4 }
