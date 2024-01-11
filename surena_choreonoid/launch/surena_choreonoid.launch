@@ -4,7 +4,7 @@
   
   <!-- tf -->
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf" args="0 0 0 0 0 0 map odom 5"/>
-  <node pkg="surena_choreonoid" type="odom_to_base_link_publisher" name="odom_to_base_link_tf"/>
+  <node pkg="surena_choreonoid" type="odom_to_robot_base_publisher" name="odom_to_robot_base_tf"/>
   <!-- camera orientation mode (quaternion) options: -->
   <arg name="0_deg_cam_orientation" default="0.4998274 -0.5001739 -0.5001739 0.4998247"/>
   <arg name="30_deg_cam_orientation" default="0.3535492 -0.3535492 -0.6123865 0.6123632"/>
