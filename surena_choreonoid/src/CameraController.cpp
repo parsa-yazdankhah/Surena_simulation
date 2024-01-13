@@ -60,10 +60,10 @@ public:
         return true;
     }
 
-    void updateVisionSensor(Camera* sensor)
+    void updateVisionSensor(Camera* sensor, ros::Time time)
     {
         sensor_msgs::Image vision;
-        vision.header.stamp = ros::Time::now();
+        vision.header.stamp = time;
         vision.header.frame_id = sensor->name();
         vision.height = sensor->image().height();
         vision.width = sensor->image().width();
@@ -85,12 +85,12 @@ public:
         imagePublisher_.publish(vision);
     }
 
-    void updateRangeVisionSensor(RangeCamera* sensor)
+    void updateRangeVisionSensor(RangeCamera* sensor, ros::Time time)
     {
         sensor_msgs::PointCloud2 range;
         sensor_msgs::Image depth;
-        depth.header.stamp = ros::Time::now();
-        range.header.stamp = ros::Time::now();
+        depth.header.stamp = time;
+        range.header.stamp = time;
         range.header.frame_id = sensor->name();
         depth.header.frame_id = sensor->name();
 
@@ -161,10 +161,10 @@ public:
         depthImagePublisher_.publish(depth);
     }
 
-    void publishCameraInfo()
+    void publishCameraInfo(ros::Time time)
     {
         sensor_msgs::CameraInfo camera_info;
-        camera_info.header.stamp = ros::Time::now();
+        camera_info.header.stamp = time;
 
         camera_info.distortion_model = "plumb_bob";
         camera_info.height = 480;
@@ -189,15 +189,16 @@ public:
     {
         timeCounter += timeStep;
         if(timeCounter >= 1.0 / 30.0){
+            ros::Time time = ros::Time::now();
             for(size_t i=0; i < cameras.size(); ++i){
                 Camera* camera = cameras[i];
-                updateVisionSensor(camera);
-                publishCameraInfo();
+                updateVisionSensor(camera,time);
+                publishCameraInfo(time);
             }
 
             for(size_t i=0; i < rangeCameras.size(); ++i){
                 RangeCamera* range_camera = rangeCameras[i];
-                updateRangeVisionSensor(range_camera);
+                updateRangeVisionSensor(range_camera,time);
             }
 
             timeCounter = 0.0;

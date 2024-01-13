@@ -48,10 +48,12 @@ int main(int argc, char** argv){
     ros::init(argc, argv, "robot_base_tf_publisher");
     ros::NodeHandle nh;
     RobotPose robot_pose(&nh);
+    ros::Rate rate(200);
     while(ros::ok())
     {
         robot_pose.tf_broadcaster();
         ros::spinOnce();
+        rate.sleep();
     }
     return 0;
 }

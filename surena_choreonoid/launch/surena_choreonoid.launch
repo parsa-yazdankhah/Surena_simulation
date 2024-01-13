@@ -11,6 +11,7 @@
   <arg name="45_deg_cam_orientation" default="0.2705873 -0.2705873 -0.6533011 0.6532707"/>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link_tf" args="0 0 0.7 $(arg 30_deg_cam_orientation) base_link camera_link 5"/>
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_tf" args="0 0 0 0 0 0 camera_link camera 5" />
+  <node pkg="tf" type="static_transform_publisher" name="camera_link_to_laser_link_tf" args="0 0 0 -0.5 0.5 0.5 0.5 camera_link laser_link 5" />
 
 
   <!-- choreonoid -->
@@ -22,6 +23,15 @@
   
   <!-- Robot keyboard teleop -->
   <node pkg="keyboard_teleop" name="keyboard_teleop_node" type="keyboard_teleop_node"/>
+
+
+  <!-- Depth Image to Laser Scan -->
+  <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" args="">
+    <remap from="image"       to="/depth_image_raw"/>
+    <remap from="camera_info" to="/camera_info"/> 
+    <param name="scan_height"     type="int"    value="5"/>
+    <param name="output_frame_id" type="str"    value="laser_link"/>
+  </node>
 
 
   <!-- rviz -->
