@@ -1,7 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find surena_choreonoid)/map/room_map_2.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="gui" default="true" />
   
+  <param name="initial_x" value="0.0" />
+  <param name="initial_y" value="0.0" />
+  <param name="initial_th" value="0.0" />
+  <param name="use_sim_time" value="false"/>
+
+  <param name="use_gui" value="$(arg gui)" />
+  
+  <!-- Choreonoid ROS -->
+  <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid" 
+    args="$(find surena_choreonoid)/project/Surena-IV-room.cnoid --start-simulation">
+  </node>
+
   <!-- tf -->
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf" args="0 0 0 0 0 0 map odom 5"/>
   <node pkg="surena_choreonoid" type="odom_to_robot_base_publisher" name="odom_to_robot_base_tf"/>
@@ -13,18 +28,6 @@
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_camera_tf" args="0 0 0 0 0 0 camera_link camera 5" />
   <node pkg="tf" type="static_transform_publisher" name="camera_link_to_laser_link_tf" args="0 0 0 -0.5 0.5 0.5 0.5 camera_link laser_link 5" />
 
-
-  <!-- choreonoid -->
-  <!-- Project options: Surena-IV-room , Surena-V-room -->
-  <arg name="project" default="Surena-IV-room"/> 
-  <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid"
-        args="$(find surena_choreonoid)/project/$(arg project).cnoid --start-simulation"/>
-
-  
-  <!-- Robot keyboard teleop -->
-  <node pkg="keyboard_teleop" name="keyboard_teleop_node" type="keyboard_teleop_node"/>
-
-
   <!-- Depth Image to Laser Scan -->
   <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" args="">
     <remap from="image"       to="/depth_image_raw"/>
@@ -33,9 +36,20 @@
     <param name="output_frame_id" type="str"    value="laser_link"/>
   </node>
 
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  <!-- AMCL -->
+  <include file="$(find surena_choreonoid)/navigation/launch/amcl_surena.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find surena_choreonoid)/navigation/launch/move_base_surena.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
 
   <!-- rviz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find surena_choreonoid)/rviz/surena_choreonoid.rviz"/>
-
-
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find surena_choreonoid)/rviz/surena_navigation.rviz"/>
+  </group>
 </launch>
