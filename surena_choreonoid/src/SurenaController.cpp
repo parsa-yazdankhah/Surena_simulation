@@ -11,6 +11,8 @@
 #include "BumpSensor.h"
 #include "std_srvs/Empty.h"
 #include <std_msgs/Int32.h>
+#include <tf/tf.h>
+#include <nav_msgs/Path.h>
 
 using namespace std;
 using namespace cnoid;
@@ -53,6 +55,7 @@ class SurenaController : public SimpleController
 
     ros::NodeHandle nh;
     ros::Subscriber keyboardCommandSub_ = nh.subscribe("/keyboard_command", 1, &SurenaController::commandHandler, this);
+    ros::Subscriber trajectoryCommandSub_ = nh.subscribe("/move_base/DWAPlannerROS/local_plan", 1, &SurenaController::localPlanner, this);
     ros::Publisher comDataPub = nh.advertise<geometry_msgs::Pose>("surena/robot_pose", 100);
   
     int idx = 0;
@@ -93,6 +96,8 @@ class SurenaController : public SimpleController
     bool isRunningTrajectory = false;
 
     int size_;
+
+    double previous_pose[3] = {0, 0, 0}; 
 
 public:
     void callGeneralTraj(double time)
@@ -154,6 +159,37 @@ public:
             default:
                 break;
             }
+            isRunningTrajectory = true;
+        }
+    }
+
+    void localPlanner(const nav_msgs::Path &msg)
+    {
+        geometry_msgs::PoseStamped localTraj = msg.poses[0];
+        if (!this->isRunningTrajectory)
+        {
+            step_count = 4;
+
+            if (localTraj.pose.position.x > localTraj.pose.position.y)
+            {
+                step_length = (localTraj.pose.position.x-previous_pose[0]) / 2.0;
+                previous_pose[0] = localTraj.pose.position.x;
+            }
+            else
+            {
+                step_length = (localTraj.pose.position.y-previous_pose[1]) / 2.0;
+                previous_pose[1] = localTraj.pose.position.y;
+            }
+            
+            tf::Quaternion q(localTraj.pose.orientation.x,localTraj.pose.orientation.y,localTraj.pose.orientation.z,localTraj.pose.orientation.w);
+            tf::Matrix3x3 m(q);
+            double roll, pitch, yaw;
+            m.getRPY(roll, pitch, yaw);
+            theta = (previous_pose[2] - yaw);
+            previous_pose[2] = yaw;
+            
+            callTraj();
+
             isRunningTrajectory = true;
         }
     }

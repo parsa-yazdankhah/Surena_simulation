@@ -114,7 +114,7 @@ items:
               data: 
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/SurenaController"
+                controller: "${HOME}/choreonoid_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/SurenaController"
                 base_directory: "None"
                 reloading: false
                 export_symbols: false
@@ -126,7 +126,7 @@ items:
               data: 
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "${HOME}/surena_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/CameraController"
+                controller: "${HOME}/choreonoid_ws/build/surena_choreonoid/lib/choreonoid-1.8/simplecontroller/CameraController"
                 base_directory: "None"
                 reloading: false
                 export_symbols: false
