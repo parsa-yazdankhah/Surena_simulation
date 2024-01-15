@@ -55,7 +55,7 @@ class SurenaController : public SimpleController
 
     ros::NodeHandle nh;
     ros::Subscriber keyboardCommandSub_ = nh.subscribe("/keyboard_command", 1, &SurenaController::commandHandler, this);
-    ros::Subscriber trajectoryCommandSub_ = nh.subscribe("/move_base/DWAPlannerROS/local_plan", 1, &SurenaController::localPlanner, this);
+    ros::Subscriber trajectoryCommandSub_ = nh.subscribe("/cmd_vel", 1, &SurenaController::localPlanner, this);
     ros::Publisher comDataPub = nh.advertise<geometry_msgs::Pose>("surena/robot_pose", 100);
   
     int idx = 0;
@@ -163,34 +163,26 @@ public:
         }
     }
 
-    void localPlanner(const nav_msgs::Path &msg)
+    void localPlanner(const geometry_msgs::Twist &msg)
     {
-        geometry_msgs::PoseStamped localTraj = msg.poses[0];
         if (!this->isRunningTrajectory)
-        {
-            step_count = 4;
+        {   
+            step_count = 2;
 
-            if (localTraj.pose.position.x > localTraj.pose.position.y)
-            {
-                step_length = (localTraj.pose.position.x-previous_pose[0]) / 2.0;
-                previous_pose[0] = localTraj.pose.position.x;
-            }
+            if (msg.linear.x > 0)
+                step_length = 0.15;
             else
-            {
-                step_length = (localTraj.pose.position.y-previous_pose[1]) / 2.0;
-                previous_pose[1] = localTraj.pose.position.y;
-            }
+                step_length = -0.15;
             
-            tf::Quaternion q(localTraj.pose.orientation.x,localTraj.pose.orientation.y,localTraj.pose.orientation.z,localTraj.pose.orientation.w);
-            tf::Matrix3x3 m(q);
-            double roll, pitch, yaw;
-            m.getRPY(roll, pitch, yaw);
-            theta = (previous_pose[2] - yaw);
-            previous_pose[2] = yaw;
-            
-            callTraj();
+            if (msg.angular.z > 0.1)
+                theta = 0.15;
+            else if (msg.angular.z < -0.1)
+                theta = -0.15;
+            else
+                theta = 0.0;
 
-            isRunningTrajectory = true;
+            callTraj();
+            isRunningTrajectory = true;  
         }
     }
 
@@ -201,7 +193,7 @@ public:
         string config_path = ros::package::getPath("trajectory_planner") + "/config/surenav_config.json";
         robot = new Robot(&nh, config_path, true);
         callGeneralTraj(2);
-        callTraj();
+        // callTraj();
         isRunningTrajectory = true;
         size_ = robot->getTrajSize();
         ioBody = io->body();
