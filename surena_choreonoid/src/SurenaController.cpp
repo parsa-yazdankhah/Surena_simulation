@@ -166,20 +166,31 @@ public:
     void localPlanner(const geometry_msgs::Twist &msg)
     {
         if (!this->isRunningTrajectory)
-        {   
-            step_count = 2;
-
-            if (msg.linear.x > 0)
-                step_length = msg.linear.x;
-            else
-                step_length = -msg.linear.x;
-            
-            if (msg.angular.z > 0.08)
-                theta = -0.15;
-            else if (msg.angular.z < -0.08)
-                theta = 0.15;
-            else
-                theta = 0.0;
+        { 
+            if (msg.linear.x > 0 && abs(msg.angular.z) < 0.05)
+                {
+                    step_length = msg.linear.x;
+                    theta = 0.0;
+                    step_count = 3;
+                }
+            else if (msg.linear.x > 0 && msg.angular.z > 0.05)
+                {
+                    step_length = -msg.linear.x;
+                    theta = abs(msg.angular.z);
+                    step_count = 3;
+                }
+            else if (msg.linear.x > 0 && msg.angular.z < -0.05)
+                {
+                    step_length = msg.linear.x;
+                    theta = abs(msg.angular.z);
+                    step_count = 3;
+                }
+            else if (msg.linear.x < 0)
+                {
+                    step_length = msg.linear.x;
+                    theta = 0.0;
+                    step_count = 2;
+                }
 
             callTraj();
             isRunningTrajectory = true;  
