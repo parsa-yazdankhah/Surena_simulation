@@ -170,14 +170,14 @@ public:
             step_count = 2;
 
             if (msg.linear.x > 0)
-                step_length = 0.15;
+                step_length = msg.linear.x;
             else
-                step_length = -0.15;
+                step_length = -msg.linear.x;
             
-            if (msg.angular.z > 0.1)
-                theta = 0.15;
-            else if (msg.angular.z < -0.1)
+            if (msg.angular.z > 0.08)
                 theta = -0.15;
+            else if (msg.angular.z < -0.08)
+                theta = 0.15;
             else
                 theta = 0.0;
 
